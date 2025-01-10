@@ -15,6 +15,7 @@ build/
 .vscode/
 
 # Logs
+logs
 *.log
 
 # OS-specific files

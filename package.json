@@ -5,8 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "node dist/index.js",
-    "build": "tsc",
-    "dev": "nodemon --watch src --exec ts-node src/index.ts"
+    "build": "tsc && npm run copy-templates",
+    "dev": "nodemon --watch src --exec ts-node src/index.ts",
+    "copy-templates": "cp -r src/templates dist/templates"
   },
   "keywords": [],
   "author": "",
