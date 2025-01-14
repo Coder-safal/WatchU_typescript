@@ -15,31 +15,31 @@ const users: { [socketId: string]: { userId: string, role: string } } = {};
 
 export function setupSocket(server: HttpServer): void {
 
-    // Middleware for authentication
-    io.use((socket: Socket, next) => {
-        const token = socket.handshake.auth.token;
-
-        if (!token) {
-            return next(new Error("Authentication error: Token is required"));
-        }
-
-        try {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            socket.data.userId = decoded?._id;
-            socket.data.role = decoded?.role;
-            // Attach user data to the socket
-            next(); // Allow the connection
-        } catch (err) {
-            next(new Error("Authentication error: Invalid token"));
-        }
-    });
-
-
     io = new Server(server, {
         cors: {
             origin: "*",
         },
     });
+
+    // Middleware for authentication
+    /*  io.use((socket: Socket, next) => {
+         const token = socket.handshake.auth.token;
+ 
+         if (!token) {
+             return next(new Error("Authentication error: Token is required"));
+         }
+ 
+         try {
+             const decoded = jwt.verify(token, process.env.JWT_SECRET);
+             socket.data.userId = decoded?._id;
+             socket.data.role = decoded?.role;
+             // Attach user data to the socket
+             next(); // Allow the connection
+         } catch (err) {
+             next(new Error("Authentication error: Invalid token"));
+         }
+     }); */
+
 
     io.on("connection", (socket: Socket) => {
         console.log("New client connected:", socket.id);
@@ -66,6 +66,19 @@ export function setupSocket(server: HttpServer): void {
             console.log("Client disconnected:", socket.id);
         });
     });
+
+    // const timesheetSocket = io.of("/timesheet");
+
+
+    // timesheetSocket.on('connection', (socket) => {
+
+    //     console.log("Client connect on timesheet socket!");
+
+
+    //     socket.on('disconnect', () => {
+    //         console.log("Client disconnect on timesheet socket");
+    //     })
+    // });
 }
 
 /**

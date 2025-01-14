@@ -3,6 +3,8 @@ import 'dotenv/config';
 import connectDB from "./config/database";
 import logger from "./config/logger";
 import emailconfig from "./config/email";
+import { setupSocket } from "./sockets/socketSetup";
+import { setupTimesheetNamespace } from "./sockets/timesheet.socket";
 
 
 
@@ -16,8 +18,13 @@ const initilize = async (): Promise<void> => {
     emailconfig.initializeEmail();
     logger.info("Initilize email succesfully!");
 
+    // setupSocket(server);
+    logger.info("Socket setup succesfully!");
 
+    // setupTimesheetNamespace();
+    logger.info("TimesheetNamespace socket setup!");
     // redis
+
 
     server.listen(PORT, () => {
 

@@ -2,6 +2,7 @@
 import mongoose from "mongoose";
 import Project, { IProject } from "../model/Project"
 import User, { IUser } from "../model/User";
+import ApiError from "../utils/apiError";
 
 class ProjectService {
 
@@ -19,8 +20,29 @@ class ProjectService {
 
         } catch (error) {
             throw error;
-
         }
+    }
+
+    addEmployee = async ({ employeeId, projectId }) => {
+
+        const project: IProject | null = await Project.findById(projectId);
+
+        if (!project) {
+            throw new ApiError(404, "Project isn't found!");
+        }
+
+        const user: IUser | null = await User.findOneAndUpdate({ _id: employeeId, role: 'employee' },
+            {
+                $set: {
+                    projectId,
+                }
+            }
+        );
+
+        if (!user) {
+            throw new ApiError(400, "Unable to add users");
+        }
+        return;
     }
 
     getAllProjectEmployee = async ({ projectId, departmentId }: { projectId: mongoose.Types.ObjectId, departmentId: mongoose.Types.ObjectId }): Promise<any> => {

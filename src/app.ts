@@ -15,6 +15,7 @@ import swaggerUi from "swagger-ui-express";
 
 const app = express();
 const server = createServer(app);
+
 // Enable trust proxy to handle 'X-Forwarded-For' headers correctly
 app.set('trust proxy', process.env.NODE_ENV === 'production' ? 'loopback, linklocal, uniquelocal' : false);
 

@@ -26,11 +26,10 @@ class AuthController {
             // res.status(200).json(
             //     new ApiResponse(200, "Email verify succesfully")
             // );
-            res.status(200).render('emailVerify');
+            res.status(200).redirect(`${process.env.FRONT_URL}/verify-email/success`);
         } catch (error) {
             // If verification fails, render the "Sorry" page
-            res.status(400).render('invalidEmail')
-            res.redirect('http://frontend.example.com/success');
+            res.status(400).redirect(`${process.env.FRONT_URL}/verify-email/error`)
         }
     }
     );
@@ -41,7 +40,6 @@ class AuthController {
             res.status(200).json(new ApiResponse(200, "Please verify your email,OTP has been send to your email"));
         } catch (error) {
             next(error);
-
         }
     })
 

@@ -8,7 +8,7 @@ import mongoose from "mongoose";
 
 class ProjectController {
     //only manager create project
-    addProject = asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    create = asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 
         const { _id: managerId } = req?.user;
         await projectService.addProject({ ...req.body, managerId });

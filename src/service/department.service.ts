@@ -3,10 +3,9 @@ import Deparment, { IDepartment } from "../model/Department";
 import ApiError from "../utils/apiError";
 import User from "../model/User";
 
-
 class DepartmentService {
 
-    createDepartment = async ({ name, description, organizationId }: { name: String, description: String, organizationId: mongoose.Schema.Types.ObjectId }): Promise<void> => {
+    createDepartment = async ({ name, description, organizationId }: { name: String, description: String, organizationId: mongoose.Types.ObjectId }): Promise<void> => {
 
         try {
             let department: IDepartment | null;

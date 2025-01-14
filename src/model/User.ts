@@ -100,9 +100,13 @@ userSchema.methods.generateAuthToken = function (): string {
                 _id: this._id,
                 organizationId: this.organizationId,
                 role: this.role,
-                projectId: this.projectId,
-                departmentId: this.departmentId,
+                projectId: this?.projectId,
+                departmentId: this?.departmentId,
 
+            },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: process.env.JWT_EXPIRES_IN,
             }
         )
     }
