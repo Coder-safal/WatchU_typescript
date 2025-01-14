@@ -63,7 +63,7 @@ class AuthService {
                     expiryIn: minutes,
                     currYear,
                     companyName: 'Brand Builder',
-                    token: `${process.env.BACKEND_URL}/${token}`,
+                    token: `${process.env.BACKEND_URL}/api/auth/verify-email/${token}`,
                 }
             });
         } catch (error: any) {
