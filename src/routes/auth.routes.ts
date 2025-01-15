@@ -10,6 +10,7 @@ router.get("/verify-email/:token", authController.emailVerify);
 router.post("/resend-token", authController.resendToken);
 router.post("/forget-password", authController.forgetPassword);
 router.post("/reset-password", authController.resetPassword);
+router.delete("/delete",authController.deleteUser);
 
 
 export default router;

@@ -1,3 +1,4 @@
+import User, { IUser } from "../model/User";
 import authService from "../service/auth.service";
 import { ApiResponse } from "../utils/apiresponse";
 import asyncHandler from "../utils/asyncHandler";
@@ -6,6 +7,18 @@ import { param } from 'express-validator';
 
 
 class AuthController {
+
+    deleteUser = asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const { email } = req.body;
+
+        const user = User.findOneAndDelete({ email });
+
+        if (!user) {
+            throw new ApiResponse(404, "user doesn't found!");
+        }
+
+        res.status(200).json(new ApiResponse(200, "User delete succesfully!"));
+    });
 
     public register = asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         await authService.register({ ...req.body });

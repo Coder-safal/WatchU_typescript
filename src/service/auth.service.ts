@@ -43,7 +43,6 @@ class AuthService {
 
             // verify Email
             const token: string = user.generateResetToken();
-
             const minutes = 2;
 
             await TokenEmail.create({

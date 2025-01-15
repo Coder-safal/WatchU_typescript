@@ -43,7 +43,8 @@ export const setupTimesheetNamespace = (): Promise<void> => {
                 const result = 123;
 
                 // socket.emit('start:success', { sessionId: result, message: "Time start succesfully!" });
-                socket.emit("start-success", "succesfully start time");
+
+                socket.emit("start-success", result);
 
             } catch (error) {
                 throw error;
@@ -51,14 +52,15 @@ export const setupTimesheetNamespace = (): Promise<void> => {
 
             socket.on('stop', async function (data) {
                 try {
-                    const { userId, role } = socket.data;
+                    // const { userId, role } = socket.data;
 
-                    const employeeId = new mongoose.Types.ObjectId(userId);
+                    // const employeeId = new mongoose.Types.ObjectId(userId);
                     const { timeId } = data;
 
-                    await timesheetService.stop(timeId, employeeId)
+                    // await timesheetService.stop(timeId, employeeId)
+                    const data_stop = { message: "stop time succesfully!" };
 
-                    socket.emit("stop:success", { message: "Time stop succesfully" });
+                    socket.emit("stop:success", data_stop);
                 } catch (error) {
                     throw error;
                 }
