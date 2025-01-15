@@ -1,5 +1,6 @@
 import User, { IUser } from "../model/User";
 import authService from "../service/auth.service";
+import ApiError from "../utils/apiError";
 import { ApiResponse } from "../utils/apiresponse";
 import asyncHandler from "../utils/asyncHandler";
 import { Request, Response, NextFunction } from 'express';
@@ -11,10 +12,17 @@ class AuthController {
     deleteUser = asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const { email } = req.body;
 
-        const user = User.findOneAndDelete({ email });
+        
+        if (!email) {
+            throw new ApiResponse(400, "Email is required!");
+        }
+
+        const user: IUser | null = await User.findOneAndDelete({ email });
+
+        console.log("User is : ", user);
 
         if (!user) {
-            throw new ApiResponse(404, "user doesn't found!");
+            throw new ApiError(404, "user doesn't found!");
         }
 
         res.status(200).json(new ApiResponse(200, "User delete succesfully!"));
