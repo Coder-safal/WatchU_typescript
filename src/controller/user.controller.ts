@@ -16,7 +16,9 @@ class UserController {
 
     updatePassword = asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 
-        await userService.updatePassword({ ...req.body });
+        const { _id } = req?.user;
+
+        await userService.updatePassword({ _id, ...req.body });
 
         res.status(200).json(new ApiResponse(200, "Password update succesfully"));
 

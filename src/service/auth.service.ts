@@ -20,6 +20,8 @@ class AuthService {
     public register = async ({ email, password, fullName, companyName }: { fullName: String, email: String, password: String, companyName: String }): Promise<void> => {
         try {
 
+            console.log("companyName ", companyName);
+
             let existUser: IUser | null = await User.findOne({ email });
             if (existUser) {
                 throw new ApiError(409, "Already users exists");
@@ -43,7 +45,7 @@ class AuthService {
 
             // verify Email
             const token: string = user.generateResetToken();
-            const minutes = 2;
+            const minutes = 45;
 
             await TokenEmail.create({
                 token,
@@ -62,7 +64,8 @@ class AuthService {
                     expiryIn: minutes,
                     currYear,
                     companyName: 'Brand Builder',
-                    token: `${process.env.BACKEND_URL}/api/auth/verify-email/${token}`,
+                    token: `${process.env.FRONT_URL}/verify-email/${token}`,
+                    
                 }
             });
         } catch (error: any) {
@@ -120,7 +123,7 @@ class AuthService {
         await TokenEmail.findOneAndDelete({ userId: user?._id });
 
         const token: string = user.generateResetToken();
-        const min = 2;
+        const min = 45;
         const tokenEmail: ITokenEmail = await TokenEmail.create({
             token,
             userId: user?._id,
@@ -141,7 +144,7 @@ class AuthService {
                 currYear,
                 companyName: 'Brand Builder',
                 // token: `${process.env.BACKEND_URL}`,
-                token: `${process.env.BACKEND_URL}/${token}`,
+                token: `${process.env.FRONT_URL}/verify-email/${token}`,
             }
         });
 

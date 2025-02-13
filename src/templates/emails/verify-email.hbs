@@ -112,24 +112,25 @@
     <div class="container">
         <div class="header">
             <img src="https://i0.wp.com/brandbuilder.com.np/wp-content/uploads/2022/08/brandbuilderCircleLogo.png?fit=319%2C319&ssl=1
-            "
-            alt="Company Logo" class="logo">
+            " alt="Company Logo" class="logo">
             {{!-- <h1 id="text">Brand Builder</h1> --}}
         </div>
 
         <div class="content">
             <h1 style="my:10px">To verify Email</h1>
-            <p>To verify Email, click verify-email button</p>
+            {{!-- <p>To verify Email, Click verify button</p> --}}
+            <p>Click verify button</p>
 
 
 
             <a href={{token}} id="btn">
                 <div class="verification-token">
-                    Verify-email
+                    Verify
                 </div>
             </a>
 
-            <p>This code will expire in {{min}} minutes. If you didn't request this verification, please ignore this
+            <p>This code will expire in {{expiryIn}} minutes. If you didn't request this verification, Please ignore
+                this
                 email.
             </p>
         </div>

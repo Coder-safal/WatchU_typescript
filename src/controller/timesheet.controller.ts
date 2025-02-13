@@ -6,41 +6,68 @@ import mongoose from "mongoose";
 import { IUser } from "../model/User";
 
 class TimesheetController {
+  start = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      // const { _id: employeeId, projectId } = req?.user;
+      const { _id: employeeId } = req?.user;
+      const employeeObjectId = new mongoose.Types.ObjectId(
+        employeeId as string
+      );
+      const { projectId } = req.params;
 
-    /* start = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+      const projectObjectId = new mongoose.Types.ObjectId(projectId);
 
-        const { _id: employeeId, projectId } = req?.user as IUser;
-        const employeeObjectId = new mongoose.Types.ObjectId(employeeId as string);
-        // const projectObjectId = new mongoose.Types.ObjectId(projectId as string);
+      const result = await timesheetService.start({
+        employeeId: employeeObjectId,
+        projectId: projectObjectId,
+      });
 
+      res
+        .status(200)
+        .json(
+          new ApiResponse(200, "Time start succesfully!", { timeId: result })
+        );
+    }
+  );
 
-        await timesheetService.start({ employeeId: employeeObjectId, projectId: projectObjectId })
+  stop = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const { timeId } = req.params;
+      const { _id } = req?.user;
+      const employeeId = new mongoose.Types.ObjectId(_id as string);
+      const timeObjId = new mongoose.Types.ObjectId(timeId as string);
 
-        res.status(200).json(new ApiResponse(200, "Time start succesfully!"))
-    }) */
+      await timesheetService.stop(timeObjId, employeeId);
 
-    stop = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+      res.status(200).json(new ApiResponse(200, "Session stop succesfully!"));
+    }
+  );
 
-        res.status(200).json(new ApiResponse(200, "Session stop succesfully!"))
-    })
+  resume = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const { timeId } = req.params;
+      const { _id } = req?.user;
+      const employeeId = new mongoose.Types.ObjectId(_id as string);
+      const timeObjId = new mongoose.Types.ObjectId(timeId as string);
 
+      await timesheetService.resume(timeObjId, employeeId);
 
-    resume = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+      res.status(200).json(new ApiResponse(200, "Session resume succesfully!"));
+    }
+  );
 
-        res.status(200).json(new ApiResponse(200, "Session stop succesfully!"))
-    })
+  pause = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const { timeId } = req.params;
+      const { _id } = req?.user;
+      const employeeId = new mongoose.Types.ObjectId(_id as string);
+      const timeObjId = new mongoose.Types.ObjectId(timeId as string);
 
+      await timesheetService.pauseTime(timeObjId, employeeId);
 
-    paulse = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-
-        res.status(200).json(new ApiResponse(200, "Session stop succesfully!"))
-    })
-
-
-
-
+      res.status(200).json(new ApiResponse(200, "Session pause succesfully!"));
+    }
+  );
 }
-
-
 
 export default new TimesheetController();

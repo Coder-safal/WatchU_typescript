@@ -1,7 +1,7 @@
 import { body, param, query } from "express-validator";
 import { validate } from "../utils/validate.utils";
 
-export const userValidation = {
+export const authValidation = {
     register:
         [
             body('email').isEmail().withMessage('Invalid email'),
@@ -70,10 +70,70 @@ export const userValidation = {
             .withMessage("name is required")
             .isLength({ min: 3 }).withMessage("Name must contain at least 3 character"),
         body('position').notEmpty().withMessage("position is required!"),
+        validate
     ],
-    refreshToken: []
+    refreshToken: [],
+}
 
+export const departmentValidation = {
+    create: [
+        body('name').notEmpty().withMessage("name is required"),
+        body('description').notEmpty().withMessage("description is required"),
+        validate
+    ],
+    addEmployee: [
+        param('departmentId').isMongoId().withMessage('Invalid departmentId'),
+        param('userId').isMongoId().withMessage('Invalid userId'),
+        validate
+
+    ]
 }
 
 
+export const projectValidation = {
+    create: [
 
+    ],
+    addEmployee: [
+        param('employeeId').isMongoId().withMessage("Invalid EmployeeId"),
+        param('projectId').isMongoId().withMessage("Invalid projectId"),
+        validate,
+    ],
+    projectEmployee: [
+        param('projectId').isMongoId().withMessage("Invalid ProjectID"),
+        param("departmentId").isMongoId().withMessage("Invalid DepartmentId"),
+        validate
+    ]
+}
+
+export const inviteValidation = {
+    invite: [
+        body('email').isEmail().withMessage('Invalid email'),
+        body('role').isIn(['employee']).withMessage("Invalid role"),
+        param('organizationId').isMongoId().withMessage("Invalid Organization Id"),
+
+    ]
+}
+
+
+export const timeSheetValidation = {
+
+    start: [
+        param('projectId').optional().isMongoId().withMessage("Invalid ProjectId"),
+        validate
+    ],
+    stop: [
+        param('timeId').isMongoId().withMessage("Invalid timeId"),
+        validate
+    ],
+    resume: [
+        param('timeId').isMongoId().withMessage("Invalid timeId"),
+        validate
+
+    ],
+    pause: [
+        param('timeId').isMongoId().withMessage("Invalid timeId"),
+        validate
+    ]
+
+}

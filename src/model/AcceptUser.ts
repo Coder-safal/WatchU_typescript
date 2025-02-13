@@ -1,5 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
+
+
 export interface IAcceptUser extends Document {
     email: string;
     organizationId: mongoose.Types.ObjectId;

@@ -9,13 +9,13 @@ export interface IUser extends Document {
     fullName: string;
     email: string;
     password: string;
-    organizationId: mongoose.Schema.Types.ObjectId;
+    organizationId: mongoose.Types.ObjectId;
     isEmailVerified: boolean;
     role: string;
     hourlyRate: number;
     isActive: Boolean;
-    projectId: mongoose.Schema.Types.ObjectId;
-    departmentId: mongoose.Schema.Types.ObjectId;
+    projectId: mongoose.Types.ObjectId;
+    departmentId: mongoose.Types.ObjectId;
     comparePassword(password: string): Promise<boolean>;
     generateAuthToken(): string;
     generateRefreshToken(): string;

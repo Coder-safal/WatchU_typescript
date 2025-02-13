@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+/* import mongoose from "mongoose";
 import timesheetController from "../controller/timesheet.controller";
 import timesheetService from "../service/timesheet.service";
 import { getSocketIO } from "./socketSetup";
@@ -32,17 +32,17 @@ export const setupTimesheetNamespace = (): Promise<void> => {
 
         socket.on('start', async function (data) {
             try {
-                // const { userId, role } = socket.data;
+                const { userId, role } = socket.data;
 
                 console.log("Hello data is this", data);
 
-                // const employeeId = new mongoose.Types.ObjectId(userId);
-                // const projectId = new mongoose.Types.ObjectId(data?.projectId);//projectId is required when session start
+                const employeeId = new mongoose.Types.ObjectId(userId);
+                const projectId = new mongoose.Types.ObjectId(data?.projectId);//projectId is required when session start
 
-                // const result: string = await timesheetService.start({ employeeId, projectId })
-                const result = 123;
+                const result: string = await timesheetService.start({ employeeId, projectId })
+                // const result = 123;
 
-                // socket.emit('start:success', { sessionId: result, message: "Time start succesfully!" });
+                socket.emit('start:success', { sessionId: result, message: "Time start succesfully!" });
 
                 socket.emit("start-success", result);
 
@@ -52,12 +52,12 @@ export const setupTimesheetNamespace = (): Promise<void> => {
 
             socket.on('stop', async function (data) {
                 try {
-                    // const { userId, role } = socket.data;
+                    const { userId, role } = socket.data;
 
-                    // const employeeId = new mongoose.Types.ObjectId(userId);
+                    const employeeId = new mongoose.Types.ObjectId(userId);
                     const { timeId } = data;
 
-                    // await timesheetService.stop(timeId, employeeId)
+                    await timesheetService.stop(timeId, employeeId)
                     const data_stop = { message: "stop time succesfully!" };
 
                     socket.emit("stop:success", data_stop);
@@ -134,3 +134,4 @@ export const setupTimesheetNamespace = (): Promise<void> => {
     return;
 }
 
+ */

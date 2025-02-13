@@ -19,6 +19,8 @@
   "dependencies": {
     "@types/multer": "^1.4.12",
     "bcryptjs": "^2.4.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "compression": "^1.7.5",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
@@ -30,6 +32,7 @@
     "hbs": "^4.2.0",
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
+    "lucide-react": "^0.473.0",
     "mongoose": "^8.9.3",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.16",
@@ -37,6 +40,8 @@
     "socket.io": "^4.8.1",
     "swagger-autogen": "^2.23.7",
     "swagger-ui-express": "^5.0.1",
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss-animate": "^1.0.7",
     "winston": "^3.17.0"
   }
 }

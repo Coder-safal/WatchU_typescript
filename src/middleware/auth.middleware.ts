@@ -8,6 +8,7 @@ import ApiError from "../utils/apiError";
 import asyncHandler from "../utils/asyncHandler";
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from "express";
+import logger from "../config/logger";
 
 
 // const User = require("../models/User");

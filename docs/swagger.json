@@ -1,0 +1,229 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "WatchU Apis",
+        "description": "API for WatchU"
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Authentication-related APIs for the WatchU application"
+        },
+        {
+            "name": "Timesheet",
+            "description": "Timesheet-related APIs for the WatchU application"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "securityDefinitions": {},
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/api/auth/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "description": "Admin register",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": "true",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "fullName": {
+                                    "type": "string",
+                                    "default": "Example Karki"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "default": "example@gmail.com"
+                                },
+                                "companyName": {
+                                    "type": "string",
+                                    "default": "Brand Builder"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "default": "123Hello@"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                }
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "description": "Login User",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "type": "string",
+                                    "default": "example@gmail.com"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "default": "123Hello@"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/auth/resend-token": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "description": "Resend Email verification Token",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "type": "string",
+                                    "default": "example@gmail.com"
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "/api/auth/forget-password": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "description": "Password Token",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "type": "string",
+                                    "default": "example@gmail.com"
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "/api/auth/reset-password": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "description": "Resend Email verification Token",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "password": {
+                                    "type": "string",
+                                    "default": "123Example#"
+                                },
+                                "token": {
+                                    "type": "string",
+                                    "default": "123456"
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "/api/auth/refresh-token": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "description": "Resend Email verification Token",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "token": {
+                                    "type": "string",
+                                    "default": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzcxMDg1OTgyNDVmMmI4Y2U4Yjc3MjkiLCJpYXQiOjE3MzYyNDE5MDIsImV4cCI6MTczNjg0NjcwMn0.1vbFpRBrq3K71s5n_q1FseRFXtRAYEGFzIYBuSVB7o4"
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "/api/time/{projectId}/start": {
+            "post": {
+                "tags": [
+                    "Timesheet"
+                ],
+                "description": "Timesheet start",
+                "parameters": [
+                    {
+                        "name": "projectId",
+                        "in": "path",
+                        "type": "string",
+                        "required": "true"
+                    }
+                ]
+            }
+        }
+    }
+}

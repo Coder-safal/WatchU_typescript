@@ -10,10 +10,11 @@ class UserService {
     userFindById = async (_id: mongoose.Schema.Types.ObjectId): Promise<IUser> => {
 
         const user: IUser | null = await User.findById(_id);
-        return user;
+
+        return user.toObject();
     }
 
- 
+
     // invite manager
     invite = async ({ role, inviteByRole, fullName, email, projectId, organizationId, hourlyRate, departmentId }): Promise<void> => {
 
@@ -62,13 +63,13 @@ class UserService {
     }
 
 
-    updatePassword = async ({ email, oldPassword, newPassword }: { email: String, oldPassword: String, newPassword: string }) => {
+    updatePassword = async ({ _id, oldPassword, newPassword }: { _id: mongoose.Types.ObjectId, oldPassword: String, newPassword: string }) => {
 
         if (oldPassword === newPassword) {
             throw new ApiError(409, "oldPassword and newPassword mustn't be same");
         }
 
-        const user = await User.findOne({ email }).select("+password");
+        const user: IUser | null = await User.findById(_id).select("+password");
 
         // console.log("Password compare", await user?.comparePassword(oldPassword));
         const validPassword = await user?.comparePassword(oldPassword as string);
@@ -125,7 +126,7 @@ class UserService {
         }
         return false;
     }
- 
+
 
     getRandomInt = (min: number, max: number) => {
         return Math.floor(Math.random() * (max - min)) + min;

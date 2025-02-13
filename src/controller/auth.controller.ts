@@ -12,23 +12,25 @@ class AuthController {
     deleteUser = asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const { email } = req.body;
 
-        
+
         if (!email) {
             throw new ApiResponse(400, "Email is required!");
         }
 
         const user: IUser | null = await User.findOneAndDelete({ email });
 
-        console.log("User is : ", user);
 
         if (!user) {
-            throw new ApiError(404, "user doesn't found!");
+            next(new ApiError(404, "user doesn't found!"));
         }
 
         res.status(200).json(new ApiResponse(200, "User delete succesfully!"));
     });
 
     public register = asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+
+        // console.log("req.body: ", req.body);
+
         await authService.register({ ...req.body });
         res.status(201).json(new ApiResponse(201, "Please verify your email,OTP has been send to your email"));
 
@@ -43,14 +45,17 @@ class AuthController {
 
         try {
             const { token } = req.params;
+            console.log("Token is: ", token);
             await authService.emailVerify(token);
-            // res.status(200).json(
-            //     new ApiResponse(200, "Email verify succesfully")
-            // );
-            res.status(200).redirect(`${process.env.FRONT_URL}/verify-email/success`);
+            res.status(200).json(
+                new ApiResponse(200, "Email verify succesfully")
+            );
+
+            // res.status(200).redirect(`${process.env.FRONT_URL}/verify-email/success`);
         } catch (error) {
             // If verification fails, render the "Sorry" page
-            res.status(400).redirect(`${process.env.FRONT_URL}/verify-email/error`)
+            // res.status(400).redirect(`${process.env.FRONT_URL}/verify-email/error`)
+            next(error);
         }
     }
     );

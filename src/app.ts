@@ -4,17 +4,15 @@ import helmet from "helmet";
 import logger from "./config/logger";
 import compression from "compression";
 import path from "path";
-import { createServer } from 'http';
+// import { createServer } from 'http';
 import router from "./routes/index";
 import errorMiddleware from './middleware/error.middleware';
 import rateLimit from "express-rate-limit";
-import swaggerUi from "swagger-ui-express";
-// import swaggerDocument from "./swagger.json";
 
 
 
 const app = express();
-const server = createServer(app);
+// const server = createServer(app); 
 
 // Enable trust proxy to handle 'X-Forwarded-For' headers correctly
 app.set('trust proxy', process.env.NODE_ENV === 'production' ? 'loopback, linklocal, uniquelocal' : false);
@@ -51,14 +49,21 @@ app.use((req, res, next) => {
     next();
 });
 
+import swaggerUI from "swagger-ui-express";
+// Import the JSON file directly
+import swaggerDocument from "../docs/swagger.json";
+
+
+// Setup Swagger UI
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
 // Set the views directory to templates/pages
 // app.set('views', path.join(__dirname, '/templates/pages'));
 
 // Set the view engine to hbs
 app.set('view engine', 'hbs');
 
-// swagger
-// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 // Routes
 app.use('/api', router);
@@ -66,4 +71,4 @@ app.use('/api', router);
 // Errors middleware
 app.use(errorMiddleware);
 
-export default server;
+export default app;
